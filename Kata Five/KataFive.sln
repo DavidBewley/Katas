@@ -1,0 +1,31 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio 15
+VisualStudioVersion = 15.0.28307.572
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "KataFive", "KataFive\KataFive.csproj", "{343CAF51-CEDE-45B7-A745-E12C252E39BE}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "KataFive.Tests", "KataFive.Tests\KataFive.Tests.csproj", "{F32A432F-A23F-4988-AC41-197536F1793A}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{343CAF51-CEDE-45B7-A745-E12C252E39BE}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{343CAF51-CEDE-45B7-A745-E12C252E39BE}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{343CAF51-CEDE-45B7-A745-E12C252E39BE}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{343CAF51-CEDE-45B7-A745-E12C252E39BE}.Release|Any CPU.Build.0 = Release|Any CPU
+		{F32A432F-A23F-4988-AC41-197536F1793A}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{F32A432F-A23F-4988-AC41-197536F1793A}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{F32A432F-A23F-4988-AC41-197536F1793A}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{F32A432F-A23F-4988-AC41-197536F1793A}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {468AE664-DE4C-413F-8122-B59A08DF4407}
+	EndGlobalSection
+EndGlobal
