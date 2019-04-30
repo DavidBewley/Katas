@@ -1,6 +1,4 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Text;
 
 namespace KataFive.Models
 {
@@ -24,26 +22,21 @@ namespace KataFive.Models
             Operator = op;
         }
 
-        public CalculationResponse GenerateCalculationResponse()
+        public string GetOperatorShortForm()
         {
-            int result = 0;
             switch (Operator)
             {
                 case CalculationType.Addition:
-                    result = FirstNumber + SecondNumber;
-                    break;
+                    return "+";
                 case CalculationType.Subtraction:
-                    result = FirstNumber - SecondNumber;
-                    break;
-                case CalculationType.Divison:
-                    result = FirstNumber / SecondNumber;
-                    break;
+                    return "-";
                 case CalculationType.Multiplication:
-                    result = FirstNumber * SecondNumber;
-                    break;
+                    return "*";
+                case CalculationType.Divison:
+                    return "/";
+                default:
+                    return null;
             }
-
-            return new CalculationResponse(Id, result);
         }
     }
 }

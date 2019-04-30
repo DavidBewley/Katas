@@ -22,6 +22,14 @@ namespace KataFive.Clients.Implementation
             };
         }
 
+        public CalculatorService(string baseUrl)
+        {
+            _client = new HttpClient()
+            {
+                BaseAddress = new Uri(baseUrl)
+            };
+        }
+
         public async Task<string> GetAliveRequest()
         {
             var response = await _client.GetAsync("alive");
@@ -89,7 +97,7 @@ namespace KataFive.Clients.Implementation
         public async Task<string> SolveCalculationProblem()
         {
             Calculation calc = await GetCalculationProblem();
-            CalculationResponse calcResponse = calc.GenerateCalculationResponse();
+            CalculationResponse calcResponse = await GenerateCalculationResponse(calc);
             return await PostCalculationResponse(calcResponse);
         }
 
@@ -118,6 +126,14 @@ namespace KataFive.Clients.Implementation
             if (input.Contains("*"))
                 return CalculationType.Multiplication;
             return CalculationType.Divison;
+        }
+
+        public async Task<CalculationResponse> GenerateCalculationResponse(Calculation calculation)
+        {
+            int result = await GetCalculationRequest(calculation.FirstNumber, calculation.SecondNumber,
+                calculation.Operator);
+
+            return new CalculationResponse(calculation.Id, result);
         }
     }
 }

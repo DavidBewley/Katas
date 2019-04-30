@@ -1,7 +1,4 @@
 ﻿using KataFive.Models;
-using System;
-using System.Collections.Generic;
-using System.Text;
 using System.Threading.Tasks;
 
 namespace KataFive.Clients
@@ -14,5 +11,6 @@ namespace KataFive.Clients
         Task<Calculation> GetCalculationProblem();
         Task<string> PostCalculationResponse(CalculationResponse calcResponse);
         Task<string> SolveCalculationProblem();
+        Task<CalculationResponse> GenerateCalculationResponse(Calculation calculation);
     }
 }
