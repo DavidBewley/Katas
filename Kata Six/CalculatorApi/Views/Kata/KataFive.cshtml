@@ -1,0 +1,174 @@
+﻿
+@{
+    ViewData["Title"] = "Kata 5";
+}
+
+<h1>Kata 5</h1>
+
+<p>
+    This weeks Kata is to interface with the API attached to this website by creating a console application.
+    For anyone who hasn't done one of these before, we usually don't worry about the console application doing anything and just concentrate on the methods and unit tests.
+    I'll attach a previous Kata as an example and if you're unsure then please message me or Nick.
+</p>
+
+<p>
+    I've split this up into smaller parts so it should be quite modular and each part not interfere with one another:
+</p>
+
+
+<h3>Part 1 - Contacting the alive controller</h3>
+<p>
+    If you send a Postman/Insomnia GET request to <a href="https://davidbewley.co.uk/api/alive" target="_blank">https://davidbewley.co.uk/api/alive</a>
+    then you should get the message 'Connection successful' back. You should create a method in your console application which can process this request and return the text.
+</p>
+
+<h3>Part 2 - Echo Numbers</h3>
+<p>
+    If you send a Postman/Insomnia GET request to <a href="https://davidbewley.co.uk/api/Calculation/EchoNumber" target="_blank">https://davidbewley.co.uk/api/Calculation/EchoNumber</a>
+    with the an integer parameter called 'number', then you should receive a response with the same number echoed back. You should create a method in your console application
+    which can take any valid integer then process this request and return the number back.
+</p>
+
+<h3>Part 3 - Server Calculations</h3>
+<p>
+    If you send a Postman/Insomnia GET request to <a href="https://davidbewley.co.uk/api/Calculation/Addition" target="_blank">https://davidbewley.co.uk/api/Calculation/Addition</a>
+    with two integer parameters called 'numberOne' and 'numberTwo', then you should receive a response with those numbers added together. You should create a method in your console application
+    which can take any two valid integers then process this request and return the number back.
+</p>
+<p>
+    I've also implemented 3 other endpoints using the <a href="https://davidbewley.co.uk/api/Calculation/" target="_blank">https://davidbewley.co.uk/api/Calculation/</a> route.
+    These all work in the same way as addition however do what their names say. All the endpoints which do this can be accessed by sending a request to:
+</p>
+<ul>
+    <li><a href="https://davidbewley.co.uk/api/Calculation/Addition" target="_blank">https://davidbewley.co.uk/api/Calculation/Additon</a></li>
+    <li><a href="https://davidbewley.co.uk/api/Calculation/Subtraction" target="_blank">https://davidbewley.co.uk/api/Calculation/Subtraction</a></li>
+    <li><a href="https://davidbewley.co.uk/api/Calculation/Division" target="_blank">https://davidbewley.co.uk/api/Calculation/Division</a></li>
+    <li><a href="https://davidbewley.co.uk/api/Calculation/Multiplication" target="_blank">https://davidbewley.co.uk/api/Calculation/Multiplication</a></li>
+</ul>
+
+
+<h3>Part 4 - Calculation Solving</h3>
+<p>
+    For this part you'll need to send two requests in the one method. The first request will get a calculation from the server,
+    your program will have to decode this request and solve it, then it must send the answer back to the server where it is verified.
+</p>
+
+<p>
+    For the first request if you send a Postman/Insomnia GET request to <a href="https://davidbewley.co.uk/api/Calculation/GetCalculationProblem" target="_blank">https://davidbewley.co.uk/api/Calculation/GetCalculationProblem</a>
+    then you'll receive a response with a GUID followed by 2 numbers with an operator. Your response should look like the following:
+</p>
+
+<pre class="prettyprint">
+27765274-9bf8-4d19-b96b-ac7eada4530d
+977 + 642
+</pre>
+
+<p>
+    From this your application should take the 2 random numbers and perform the calculation (so in this case 977+642=1619). From this the application should send
+    a POST request to <a href="https://davidbewley.co.uk/api/Calculation/SubmitSolution" target="_blank">https://davidbewley.co.uk/api/Calculation/SubmitSolution</a>
+    with the Id and solution as JSON in the body. As example for this request the body would look like:
+</p>
+
+<pre class="prettyprint">
+{
+	"Id":"27765274-9bf8-4d19-b96b-ac7eada4530d",
+	"SolutionNumber":"1619"
+}
+</pre>
+
+<p>
+    After sending this request you will receive a response letting you know if the solutionNumber was correct or not. If you get the message
+    'Could not find a calculation problem with this Id' then the server will have reset. Just generate a new problem using the /GetCalculationProblem endpoint.
+</p>
+
+<h3>Extra Notes</h3>
+
+<p>
+    Usually we mark solely off the unit tests however due to this Kata requiring this server to be accessed we want integration tests as a minimum to ensure each method works
+    as intended. If you can perform unit tests as well then that would be even better.
+</p>
+
+<h3>Mark Scheme</h3>
+
+<table>
+    <tr>
+        <th>Criteria</th>
+        <th>Points</th>
+    </tr>
+    <tr>
+        <td>Part 1</td>
+        <td>1</td>
+    </tr>
+    <tr>
+        <td>Part 2</td>
+        <td>1</td>
+    </tr>
+    <tr>
+        <td>Part 3</td>
+        <td>4</td>
+    </tr>
+    <tr>
+        <td>Part 4 - Get problem</td>
+        <td>1</td>
+    </tr>
+    <tr>
+        <td>Part 4 - Make calculation</td>
+        <td>1</td>
+    </tr>
+    <tr>
+        <td>Part 4 - Post solution</td>
+        <td>3</td>
+    </tr>
+    <tr>
+        <td>Part 4 - Supports all calculation types</td>
+        <td>3</td>
+    </tr>
+    <tr>
+        <td>Part 4 - Calculations done via API</td>
+        <td>1</td>
+    </tr>
+    <tr>
+        <td>Base address only used in code once</td>
+        <td>1</td>
+    </tr>
+    <tr>
+        <td>Async calls</td>
+        <td>1</td>
+    </tr>
+    <tr>
+        <td>Automated process to test all endpoints</td>
+        <td>3</td>
+    </tr>
+    <tr>
+        <td>No duplication</td>
+        <td>1</td>
+    </tr>
+    <tr>
+        <td>Easily expandable for new calculation operators</td>
+        <td>1</td>
+    </tr>
+    <tr>
+        <td>Use of multiple classes</td>
+        <td>1</td>
+    </tr>
+    <tr>
+        <td>Good class and method names</td>
+        <td>2</td>
+    </tr>
+    <tr>
+        <td>Appropriate use of public/private</td>
+        <td>1</td>
+    </tr>
+    <tr>
+        <td>HTTP client used</td>
+        <td>1</td>
+    </tr>
+    <tr>
+        <td>Overall quality</td>
+        <td>5</td>
+    </tr>
+    <tr>
+        <td><strong>Total</strong></td>
+        <td><strong>32</strong></td>
+    </tr>
+</table>
