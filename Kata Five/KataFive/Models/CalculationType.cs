@@ -1,8 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Text;
-
-namespace KataFive.Models
+﻿namespace KataFive.Models
 {
     public enum CalculationType
     {
