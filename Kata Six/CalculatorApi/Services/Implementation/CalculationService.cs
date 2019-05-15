@@ -42,13 +42,13 @@ namespace CalculatorApi.Services.Implementation
             _calculationProblemList.Clear();
         }
 
-        public bool RemoveCalcualtion(Guid id)
+        public bool RemoveCalculation(Guid id)
         {
-            var calcualtionProblem = _calculationProblemList.FirstOrDefault(c => c.Id == id);
-            if (calcualtionProblem == null)
+            var calculationProblem = _calculationProblemList.FirstOrDefault(c => c.Id == id);
+            if (calculationProblem == null)
                 return false;
 
-            _calculationProblemList.Remove(calcualtionProblem);
+            _calculationProblemList.Remove(calculationProblem);
             return true;
         }
     }

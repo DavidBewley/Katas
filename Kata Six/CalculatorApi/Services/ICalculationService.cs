@@ -10,7 +10,7 @@ namespace CalculatorApi.Services
     {
         CalculationProblem GenerateNewProblem();
         CalculationProblem FindCalculationProblem(Guid id);
-        bool RemoveCalcualtion(Guid id);
+        bool RemoveCalculation(Guid id);
         bool CheckCalculationIsActive(Guid id);
         void RemoveAllCalculations();
     }

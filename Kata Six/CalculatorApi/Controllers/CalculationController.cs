@@ -13,11 +13,11 @@ namespace CalculatorApi.Controllers
     [ApiController]
     public class CalculationController : ControllerBase
     {
-        private readonly ICalculationService _calculationServcie;
+        private readonly ICalculationService _calculationService;
 
         public CalculationController(ICalculationService calculationService)
         {
-            _calculationServcie = calculationService;
+            _calculationService = calculationService;
         }
 
         [HttpGet]
@@ -101,7 +101,7 @@ namespace CalculatorApi.Controllers
         [HttpGet]
         public IActionResult GetCalculationProblem()
         {
-            var problem = _calculationServcie.GenerateNewProblem();
+            var problem = _calculationService.GenerateNewProblem();
             return Ok($"{problem.Id}\r\n{problem.NumberOne} + {problem.NumberTwo}");
         }
 
@@ -111,13 +111,13 @@ namespace CalculatorApi.Controllers
             if (solution.Id == Guid.Empty || solution.SolutionNumber == 0)
                 return BadRequest("Please ensure your solution Id and number are correct");
 
-            var calculationProblem = _calculationServcie.FindCalculationProblem(solution.Id);
+            var calculationProblem = _calculationService.FindCalculationProblem(solution.Id);
             if (calculationProblem == null)
                 return BadRequest("Could not find a calculation problem with this Id");
 
             if (calculationProblem.Solution == solution.SolutionNumber)
             {
-                _calculationServcie.RemoveCalcualtion(calculationProblem.Id);
+                _calculationService.RemoveCalculation(calculationProblem.Id);
                 return Ok("Correct!");
             }
 
@@ -127,15 +127,15 @@ namespace CalculatorApi.Controllers
         [HttpGet]
         public IActionResult ClearAllCalculations()
         {
-            var problem = _calculationServcie.GenerateNewProblem();
-            _calculationServcie.RemoveAllCalculations();
+            var problem = _calculationService.GenerateNewProblem();
+            _calculationService.RemoveAllCalculations();
             return Ok($"List should now be clear - Calculation was generated before list cleared:\r\n{problem.Id}");
         }
 
         [HttpGet]
         public IActionResult CheckCalculationExists(Guid id)
         {
-            bool result =_calculationServcie.CheckCalculationIsActive(id);
+            bool result =_calculationService.CheckCalculationIsActive(id);
             return Ok($"{id} - Active: {result}");
         }
     }
