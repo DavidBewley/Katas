@@ -9,8 +9,15 @@ namespace KataSeven
             PowerCalculator calculator = new PowerCalculator();
 
             Console.WriteLine("Number: 420, Exponent: 3");
-            string answer = calculator.Calculate(420, 3);
+            string answer = calculator.CalculateSequence(420, 3);
             Console.WriteLine($"Output: {answer}");
+            Console.WriteLine();
+
+            Console.WriteLine("Number: 420, Exponent: 4");
+            answer = calculator.CalculateSequence(420, 4);
+            Console.WriteLine($"Output: {answer}");
+            Console.WriteLine();
+
             Console.ReadKey();
         }
     }
