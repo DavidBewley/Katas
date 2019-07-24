@@ -50,7 +50,7 @@ namespace KataSeven
             var remainingSequence = new List<string>(sequence);
             for (int index = 0; index < sequence.Count; index++)
             {
-                var compareSequence = new List<string>();
+                var compareSequence = new List<string>(); 
                 foreach (var number in remainingSequence)
                 {
                     compareSequence.Add(number);
