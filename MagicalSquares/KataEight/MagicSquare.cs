@@ -93,5 +93,24 @@ namespace MagicalSquares
         private int[] GetDiagonalRight()
             => new[] { _squareArray[0, 2], _squareArray[1, 1], _squareArray[2, 0] };
         #endregion
+
+        public override string ToString()
+        {
+            string outputString = "---------\r\n";
+            for (int i = 0; i < 3; i++)
+            {
+                outputString += "| ";
+                for (int j = 0; j < 3; j++)
+                {
+                    outputString += $"{_squareArray[i, j]} "
+                    ;
+                }
+                outputString += "|\r\n";
+            }
+
+            outputString += "---------";
+
+            return outputString;
+        }
     }
 }

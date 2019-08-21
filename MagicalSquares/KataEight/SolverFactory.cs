@@ -16,6 +16,21 @@ namespace MagicalSquares
             return allSquares.OrderBy(s => s.GetNumberOfChanges()).FirstOrDefault();
         }
 
+        public MagicSquare GetMostEfficientlySolvedSquare(int[,] startingArray)
+        {
+            string convertedSquare = "";
+            for (int i = 0; i < 3; i++)
+            {
+                for (int j = 0; j < 3; j++)
+                {
+                    convertedSquare += $"{startingArray[i, j].ToString()},";
+                }
+            }
+            convertedSquare = convertedSquare.TrimEnd(',');
+
+            return GetMostEfficientlySolvedSquare(convertedSquare);
+        }
+
         private List<SquareSolver> GenerateAllSolvers()
             => new List<SquareSolver>
             {
