@@ -3,9 +3,11 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio 15
 VisualStudioVersion = 15.0.28307.705
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "KataSeven", "KataSeven\KataSeven.csproj", "{CB00ED51-CEC1-4125-B207-30D642E8E77D}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "KataSeven", "KataSeven\KataSeven.csproj", "{CB00ED51-CEC1-4125-B207-30D642E8E77D}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "KataSeven.Test", "KataSeven.Test\KataSeven.Test.csproj", "{C6A3AC52-8D87-49B8-AA74-36051D792F2C}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "KataSeven.Test", "KataSeven.Test\KataSeven.Test.csproj", "{C6A3AC52-8D87-49B8-AA74-36051D792F2C}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "KataSeven.2", "KataSeven.2\KataSeven.2.csproj", "{1FF54F86-754A-427B-9537-5569A29B06E3}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -21,6 +23,10 @@ Global
 		{C6A3AC52-8D87-49B8-AA74-36051D792F2C}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{C6A3AC52-8D87-49B8-AA74-36051D792F2C}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{C6A3AC52-8D87-49B8-AA74-36051D792F2C}.Release|Any CPU.Build.0 = Release|Any CPU
+		{1FF54F86-754A-427B-9537-5569A29B06E3}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{1FF54F86-754A-427B-9537-5569A29B06E3}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{1FF54F86-754A-427B-9537-5569A29B06E3}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{1FF54F86-754A-427B-9537-5569A29B06E3}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
