@@ -23,7 +23,6 @@ namespace ApiClient.Repositories
         public async Task<List<Employee>> GetAllEmployees()
         {
             var response = await _httpClient.GetAsync("employee");
-            response.EnsureSuccessStatusCode();
 
             return JsonConvert.DeserializeObject<List<Employee>>(await response.Content.ReadAsStringAsync());
         }
@@ -31,8 +30,6 @@ namespace ApiClient.Repositories
         public async Task<Employee> GetEmployee(Guid id)
         {
             var response = await _httpClient.GetAsync($"employee/{id}");
-            response.EnsureSuccessStatusCode();
-
             return JsonConvert.DeserializeObject<Employee>(await response.Content.ReadAsStringAsync());
         }
 
@@ -40,8 +37,6 @@ namespace ApiClient.Repositories
         {
             var content = new StringContent(JsonConvert.SerializeObject(employee), Encoding.UTF8, "application/json");
             var response = await _httpClient.PostAsync("employee", content);
-
-            response.EnsureSuccessStatusCode();
 
             return JsonConvert.DeserializeObject<Employee>(await response.Content.ReadAsStringAsync());
         }
@@ -51,16 +46,12 @@ namespace ApiClient.Repositories
             var content = new StringContent(JsonConvert.SerializeObject(employee), Encoding.UTF8, "application/json");
             var response = await _httpClient.PutAsync("employee", content);
 
-            response.EnsureSuccessStatusCode();
-
             return JsonConvert.DeserializeObject<Employee>(await response.Content.ReadAsStringAsync());
         }
 
         public async Task DeleteEmployee(Guid id)
         {
             var response = await _httpClient.DeleteAsync($"employee/{id}");
-
-            response.EnsureSuccessStatusCode();
         }
     }
 }
