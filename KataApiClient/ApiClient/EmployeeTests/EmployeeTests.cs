@@ -22,6 +22,11 @@ namespace EmployeeTests
             protected Employee ProcessedEmployee;
             protected Guid Id;
 
+            public TestBase()
+            {
+                EmployeeApi = new Mock<IEmployeeApi>();
+            }
+
             public async Task InitializeAsync()
                 => await Run();
 
@@ -39,7 +44,6 @@ namespace EmployeeTests
             {
                 EmployeeList = new EmployeeSeed().GetDetailedEmployeeList(10);
 
-                EmployeeApi = new Mock<IEmployeeApi>();
                 EmployeeApi
                     .Setup(e => e.GetAllEmployees())
                     .ReturnsAsync(EmployeeList);
@@ -68,7 +72,6 @@ namespace EmployeeTests
                 Id = Guid.NewGuid();
                 Employee = new EmployeeSeed().GetDetailedEmployeeWithId(Id);
 
-                EmployeeApi = new Mock<IEmployeeApi>();
                 EmployeeApi
                     .Setup(e => e.GetEmployee(It.Is<Guid>(i => i == Id)))
                     .ReturnsAsync(Employee);
@@ -92,7 +95,6 @@ namespace EmployeeTests
             {
                 Employee = new EmployeeSeed().GetSingleEmployee();
 
-                EmployeeApi = new Mock<IEmployeeApi>();
                 EmployeeApi
                     .Setup(e => e.CreateEmployee(It.Is<Employee>(i => i == Employee)))
                     .Callback((Employee e) => ProcessedEmployee = e)
@@ -117,7 +119,6 @@ namespace EmployeeTests
             {
                 Employee = new EmployeeSeed().GetSingleEmployee();
 
-                EmployeeApi = new Mock<IEmployeeApi>();
                 EmployeeApi
                     .Setup(e => e.UpdateEmployee(It.Is<Employee>(i => i == Employee)))
                     .Callback((Employee e) => ProcessedEmployee = e)
@@ -142,7 +143,6 @@ namespace EmployeeTests
             {
                 Id = Guid.NewGuid();
 
-                EmployeeApi = new Mock<IEmployeeApi>();
                 EmployeeApi
                     .Setup(e => e.DeleteEmployee(It.Is<Guid>(i => i == Id)));
             }
