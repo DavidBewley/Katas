@@ -1,5 +1,6 @@
 ﻿using System;
-using System.Collections.Generic;
+using System.Linq;
+using System.Threading.Tasks;
 using ApiClient.Models;
 using ApiClient.Repositories;
 
@@ -14,19 +15,29 @@ namespace ApiClient.Processors
             _employeeApi = employeeApi;
         }
 
-        public List<Employee> GetEmployeeList() 
-            => _employeeApi.GetAllEmployees();
+        public async Task<string> DisplayEmployeeList()
+            => (await _employeeApi.GetAllEmployees()).Aggregate("", (current, employee)
+                => current + employee);
 
-        public Employee GetEmployee(Guid id) 
-            => _employeeApi.GetEmployee(id);
+        public async Task<string> DisplaySingleEmployee(Guid id)
+            => (await _employeeApi.GetEmployee(id)).ToString();
 
-        public void CreateEmployee(Employee employee) 
-            => _employeeApi.CreateEmployee(employee);
+        public async Task<string> CreateNewEmployee(Employee employee)
+        {
+            var responseEmployee = await _employeeApi.CreateEmployee(employee);
+            return $"Created Employee!\r\n{responseEmployee}";
+        }
 
-        public void UpdateEmployee(Employee employee)
-            => _employeeApi.UpdateEmployee(employee);
+        public async Task<string> UpdateEmployee(Employee employee)
+        {
+            var responseEmployee = await _employeeApi.UpdateEmployee(employee);
+            return $"Updated Employee!\r\n{responseEmployee}";
+        }
 
-        public void DeleteEmployee(Guid id)
-            => _employeeApi.DeleteEmployee(id);
+        public async Task<string> DeleteEmployee(Guid id)
+        {
+            await _employeeApi.DeleteEmployee(id);
+            return $"Deleted Employee!";
+        }
     }
 }

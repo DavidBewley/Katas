@@ -1,15 +1,16 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Threading.Tasks;
 using ApiClient.Models;
 
 namespace ApiClient.Repositories
 {
     public interface IEmployeeApi
     {
-        List<Employee> GetAllEmployees(); 
-        Employee GetEmployee(Guid id);
-        void CreateEmployee(Employee employee);
-        void UpdateEmployee(Employee employee);
-        void DeleteEmployee(Guid id);
+        Task<List<Employee>> GetAllEmployees();
+        Task<Employee> GetEmployee(Guid id);
+        Task<Employee> CreateEmployee(Employee employee);
+        Task<Employee> UpdateEmployee(Employee employee);
+        Task DeleteEmployee(Guid id);
     }
 }

@@ -1,5 +1,7 @@
 using System;
 using System.Collections.Generic;
+using System.Linq;
+using System.Threading.Tasks;
 using ApiClient.Models;
 using ApiClient.Processors;
 using ApiClient.Repositories;
@@ -11,9 +13,9 @@ namespace EmployeeTests
 {
     public class EmployeeTests
     {
-        public class WhenTheEmployeeListIsRequested
+        public class WhenTheEmployeeListIsRequested : IAsyncLifetime
         {
-            private readonly List<Employee> _processedCommand;
+            private string _processedCommand;
             private readonly Mock<IEmployeeApi> _employeeApi;
             private readonly List<Employee> _employees;
 
@@ -24,10 +26,11 @@ namespace EmployeeTests
                 _employeeApi = new Mock<IEmployeeApi>();
                 _employeeApi
                     .Setup(e => e.GetAllEmployees())
-                    .Returns(_employees);
-
-                _processedCommand = new CommandProcessor(_employeeApi.Object).GetEmployeeList();
+                    .ReturnsAsync(_employees);
             }
+
+            public async Task InitializeAsync()
+                => _processedCommand = await new CommandProcessor(_employeeApi.Object).DisplayEmployeeList();
 
             [Fact]
             public void EmployeeApiIsCalled()
@@ -35,12 +38,19 @@ namespace EmployeeTests
 
             [Fact]
             public void EmployeeApiReturnsData()
-                => _processedCommand.Should().BeEquivalentTo(_employees);
+            {
+                var processedString = _employees.Aggregate("", (current, employee)
+                    => current + ($"ID: {employee.Id}\r\n" + $"Name: {employee.Name}\r\n" + $"Start Date: {employee.StartDate:dd/MM/yyyy}\r\n\r\n"));
+                _processedCommand.Should().BeEquivalentTo(processedString);
+            }
+
+            public Task DisposeAsync() 
+                => Task.CompletedTask;
         }
 
-        public class WhenASingleEmployeeIsRequested
+        public class WhenASingleEmployeeIsRequested : IAsyncLifetime
         {
-            private readonly Employee _processedCommand;
+            private string _processedCommand;
             private readonly Mock<IEmployeeApi> _employeeApi;
             private readonly Employee _employee;
             private readonly Guid _id;
@@ -53,10 +63,11 @@ namespace EmployeeTests
                 _employeeApi = new Mock<IEmployeeApi>();
                 _employeeApi
                     .Setup(e => e.GetEmployee(It.Is<Guid>(i => i == _id)))
-                    .Returns(_employee);
-
-                _processedCommand = new CommandProcessor(_employeeApi.Object).GetEmployee(_id);
+                    .ReturnsAsync(_employee);
             }
+
+            public async Task InitializeAsync()
+                => _processedCommand = await new CommandProcessor(_employeeApi.Object).DisplaySingleEmployee(_id);
 
             [Fact]
             public void EmployeeApiIsCalled()
@@ -64,10 +75,13 @@ namespace EmployeeTests
 
             [Fact]
             public void EmployeeApiReturnsData()
-                => _processedCommand.Should().BeEquivalentTo(_employee);
+                => _processedCommand.Should().BeEquivalentTo(_employee.ToString());
+
+            public Task DisposeAsync()
+                => Task.CompletedTask;
         }
 
-        public class WhenAnEmployeeCreationIsRequested
+        public class WhenAnEmployeeCreationIsRequested : IAsyncLifetime
         {
             private readonly Mock<IEmployeeApi> _employeeApi;
             private readonly Employee _employee;
@@ -82,9 +96,10 @@ namespace EmployeeTests
                     .Setup(e => e.CreateEmployee(It.Is<Employee>(i => i == _employee)))
                     .Callback((Employee e) => _createdEmployee = e)
                     ;
-
-                new CommandProcessor(_employeeApi.Object).CreateEmployee(_employee);
             }
+
+            public async Task InitializeAsync()
+                => await new CommandProcessor(_employeeApi.Object).CreateNewEmployee(_employee);
 
             [Fact]
             public void EmployeeApiIsCalled()
@@ -93,9 +108,12 @@ namespace EmployeeTests
             [Fact]
             public void EmployeeApiCreatesThePassedId() 
                 => _createdEmployee.Should().BeEquivalentTo(_employee);
+
+            public Task DisposeAsync()
+                => Task.CompletedTask;
         }
 
-        public class WhenAnEmployeeUpdateIsRequested
+        public class WhenAnEmployeeUpdateIsRequested : IAsyncLifetime
         {
             private readonly Mock<IEmployeeApi> _employeeApi;
             private readonly Employee _employee;
@@ -110,9 +128,10 @@ namespace EmployeeTests
                     .Setup(e => e.UpdateEmployee(It.Is<Employee>(i => i == _employee)))
                     .Callback((Employee e) => _updatedEmployee = e)
                     ;
-
-                new CommandProcessor(_employeeApi.Object).UpdateEmployee(_employee);
             }
+
+            public async Task InitializeAsync()
+                => await new CommandProcessor(_employeeApi.Object).UpdateEmployee(_employee);
 
             [Fact]
             public void EmployeeApiIsCalled()
@@ -121,9 +140,12 @@ namespace EmployeeTests
             [Fact]
             public void EmployeeApiCreatesThePassedId()
                 => _updatedEmployee.Should().BeEquivalentTo(_employee);
+
+            public Task DisposeAsync()
+                => Task.CompletedTask;
         }
 
-        public class WhenAnEmployeeDeleteIsRequested
+        public class WhenAnEmployeeDeleteIsRequested : IAsyncLifetime
         {
             private readonly Mock<IEmployeeApi> _employeeApi;
             private readonly Guid _id;
@@ -135,13 +157,17 @@ namespace EmployeeTests
                 _employeeApi = new Mock<IEmployeeApi>();
                 _employeeApi
                     .Setup(e => e.DeleteEmployee(It.Is<Guid>(i => i == _id)));
-
-                 new CommandProcessor(_employeeApi.Object).DeleteEmployee(_id);
             }
+
+            public async Task InitializeAsync()
+                => await new CommandProcessor(_employeeApi.Object).DeleteEmployee(_id);
 
             [Fact]
             public void EmployeeApiIsCalled()
                 => _employeeApi.Verify(e => e.DeleteEmployee(It.Is<Guid>(i => i == _id)), Times.Once);
+
+            public Task DisposeAsync()
+                => Task.CompletedTask;
         }
     }
 }
